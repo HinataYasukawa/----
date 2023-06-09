@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class nodraw {
+public class autobattle {
     static int[][] board = new int[3][3];
     static int m = 1;
     static int b = 2;
