@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class main {
+public class rule {
     static int[][] board = new int[3][3];
     static int m = 1;
     static int b = 2;
