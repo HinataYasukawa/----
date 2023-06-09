@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class autobattle {
     static int[][] board = new int[3][3];
     static int m = 1;
@@ -14,46 +12,38 @@ public class autobattle {
             }
         }
 
+        int c = decideFirst();
+
         while (end == false) {
-            System.out.print("input:");
-            Scanner scanner = new Scanner(System.in);
-            String input = scanner.nextLine();
-            String[] parts = input.split(" ");
+            int x = (int) Math.round(Math.random() * 2);
+            int y = (int) Math.round(Math.random() * 2);
 
-            int x = Integer.parseInt(parts[0]);
-            int y = Integer.parseInt(parts[1]);
-            int c;
+            // check board
+            if (board[x][y] == 0) {
 
-            if (parts[2].equals("m")) {
-                c = 1;
-            } else if (parts[2].equals("b")) {
-                c = 2;
-            } else {
-                System.out.println("please input m or b");
-                continue;
-            }
+                // Update board
+                board[x][y] = c;
 
-            if (x < 0 || x >= 3 || y < 0 || y >= 3) {
-                System.out.println("please input 0 or 1 or 2");
-                continue;
-            }
+                // Print board
+                printBoard();
 
-            // Update board
-            board[x][y] = c;
+                // change order
+                if (c == m) {
+                    c = b;
+                } else if (c == b) {
+                    c = m;
+                }
 
-            // Print board
-            printBoard();
+                int winner = checkWinner();
+                int filled = checkAllFilled();
 
-            int winner = checkWinner();
-            if (winner != 0) {
-                System.out.println("Player " + (winner == 1 ? "m" : "b") + " wins!");
-                end = true;
-            }
-
-            int filled = checkAllFilled();
-            if (filled == 0) {
-                System.out.println("draw");
-                end = true;
+                if (winner != 0) {
+                    System.out.println("Player " + (winner == 1 ? "m(1)" : "b(2)") + " wins!");
+                    end = true;
+                } else if (filled == 0) {
+                    System.out.println("draw");
+                    end = true;
+                }
             }
         }
     }
@@ -65,6 +55,7 @@ public class autobattle {
             }
             System.out.println();
         }
+        System.out.print("\n");
     }
 
     private static int checkWinner() {
@@ -103,5 +94,18 @@ public class autobattle {
             }
         }
         return 0;
+    }
+
+    public static int decideFirst() {
+        int first = (int) Math.round(Math.random());
+
+        if (first <= 0.5) {
+            // m first
+            System.out.println("first is m(1)");
+            return m;
+        }
+        // b first
+        System.out.println("first is b(2)");
+        return b;
     }
 }
